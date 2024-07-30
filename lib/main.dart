@@ -27,14 +27,16 @@ class MyApp extends StatelessWidget {
         BlocProvider<ThemeCubit>(
             create: (BuildContext context) => ThemeCubit()),
       ],
-      child: BlocBuilder<ThemeCubit, ThemeState>(
+      child: BlocConsumer<ThemeCubit, ThemeState>(
+        listener: (context, state) {},
         builder: (context, state) {
-          ThemeCubit cubit = ThemeCubit.get(context);
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
-            themeMode: cubit.lightTheme ? ThemeMode.light : ThemeMode.dark,
+            themeMode: ThemeCubit.get(context).lightTheme
+                ? ThemeMode.light
+                : ThemeMode.dark,
             home: const HomeLayout(),
           );
         },
